@@ -142,9 +142,11 @@ namespace AutoDuty.Managers
                             this.W2WFound     = false;
 
                             string json;
-
-                            using (StreamReader streamReader = new(this.FilePath, Encoding.UTF8))
+                            using (FileStream fs = new(this.FilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                            using (StreamReader streamReader = new(fs, Encoding.UTF8))
                                 json = streamReader.ReadToEnd();
+                            // using (StreamReader streamReader = new(this.FilePath, Encoding.UTF8))
+                            //     json = streamReader.ReadToEnd();
 
 
                             this.pathFile = JsonConvert.DeserializeObject<PathFile>(json, ConfigurationMain.JsonSerializerSettings);

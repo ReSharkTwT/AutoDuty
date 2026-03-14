@@ -21,7 +21,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
+    <DalamudLibPath>$(DALAMUD_HOME)</DalamudLibPath>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   
@@ -54,9 +54,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ECommons.IPC\ECommons.IPC\ECommons.IPC.csproj" />
-    <ProjectReference Include="..\ECommons\ECommons\ECommons.csproj" />
-    <ProjectReference Include="..\NightmareUI\NightmareUI\NightmareUI.csproj" />
+    <ProjectReference Include="..\..\ECommons.IPC\ECommons.IPC\ECommons.IPC.csproj" />
+    <ProjectReference Include="..\..\ECommons\ECommons\ECommons.csproj" />
+    <ProjectReference Include="..\..\NightmareUI\NightmareUI\NightmareUI.csproj" />
     <PackageReference Include="Pictomancy" Version="0.0.*" />
     <PackageReference Include="WrathCombo.API" Version="0.5.2" />
     <Reference Include="Dalamud.Common">

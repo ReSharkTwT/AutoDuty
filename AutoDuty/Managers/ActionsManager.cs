@@ -589,6 +589,9 @@ namespace AutoDuty.Managers
             if (gameObject is not { IsTargetable: true } || !gameObject.IsValid() || !IsValid)
                 return true;
 
+            if (Player.IsBusy)
+                return true;
+
             if (EzThrottler.Throttle("Interactable", 1000))
             {
                 if (!TryGetObjectByDataId(gameObject?.BaseId ?? 0, igo => igo.IsTargetable, out gameObject)) return true;

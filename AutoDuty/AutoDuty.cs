@@ -774,9 +774,23 @@ public sealed class AutoDuty : IDalamudPlugin
                         this.currentPath = container.Paths.IndexOf(dp => dp.FileName.Equals(s, StringComparison.InvariantCultureIgnoreCase));
                 }
 
-                ContentPathsManager.DutyPath? path = this.currentPath < 0 ?
-                                                         container.SelectPath(out this.currentPath) :
-                                                         container.Paths[this.currentPath > -1 ? this.currentPath : 0];
+                // --- 优化开始 ---
+                
+                // 1. 添加调试日志 (推荐方式：简洁明了)
+                Svc.Log.Debug($"[AutoDuty] 路径检查: Index={this.currentPath}, Count={container.Paths.Count}");
+
+                // 2. 优化后的三元运算
+                // 逻辑：如果 (列表为空 OR 索引<0 OR 索引越界) -> 重新选择；否则 -> 直接取用
+                bool needsSelect = container.Paths.Count == 0 || this.currentPath < 0 || this.currentPath >= container.Paths.Count;
+                
+                ContentPathsManager.DutyPath? path = needsSelect ?
+                                                        container.SelectPath(out this.currentPath) :
+                                                        container.Paths[this.currentPath];
+                // --- 优化结束 ---
+
+                // ContentPathsManager.DutyPath? path = this.currentPath < 0 ?
+                //                                          container.SelectPath(out this.currentPath) :
+                //                                          container.Paths[this.currentPath > -1 ? this.currentPath : 0];
 
                 this.pathFile = path?.FilePath ?? "";
                 if (path?.Actions != null)
